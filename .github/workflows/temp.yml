@@ -7,5 +7,4 @@ jobs:
     steps:
       - name: temp
         run: |
-         cd /lib
-         sudo find / -name libpcre.so.1
+          ls -a
