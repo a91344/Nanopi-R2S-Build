@@ -15,7 +15,7 @@ jobs:
         ref: master
     - name: prepare
       run: |
-        find / -type f -name *libpcre.so.*
+        sudo find / -type f -name *libpcre.so.*
     - name: Installation depends
       run: |
         find / -type f -name *libpcre.so.*
