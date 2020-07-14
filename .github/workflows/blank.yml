@@ -1,33 +1,43 @@
-# This is a basic workflow to help you get started with Actions
+name: Build OpenWrt
+on: 
+  schedule:
+    - cron: 0 20 * * *
 
-name: CI
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: ubuntu-18.04
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@master
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+     - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+    - name: Installation depends
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        sudo chmod 777 -R .
+        sudo apt-get update
+        sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget swig
+    - name: Clone source code
+      run: |
+        git clone https://github.com/coolsnowwolf/lede.git
+    - name: Generate config file
+      run: |
+        cd lede
+        rm -rf .config*
+        mv ../.config_r2s_sd_8G ./
+        echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> lede/feeds.conf.default
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+    - name: Download package
+      run: |
+        cd lede && make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+    - name: Build
+      run: |
+        cd lede
+        make -j$(nproc) V=s || make -j4 V=s
+    - name : Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt
+        path: openwrt/bin
