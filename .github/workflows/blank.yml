@@ -9,6 +9,25 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
+    - name: install pcre
+      run: |
+        sudo apt-get install libreadline-dev libbz2-dev tar
+        sudo wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.bz2
+        sudo tar -jxvf pcre-8.44.tar.bz2
+        cd pcre-8.44
+        ./configure --prefix=/usr                     \
+            --docdir=/usr/share/doc/pcre-8.44 \
+            --enable-unicode-properties       \
+            --enable-pcre16                   \
+            --enable-pcre32                   \
+            --enable-pcregrep-libz            \
+            --enable-pcregrep-libbz2          \
+            --enable-pcretest-libreadline     \
+            --disable-static                 &&
+        make
+        sudo make install                     &&
+        sudo mv -v /usr/lib/libpcre.so.* /lib &&
+        sudo ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
     - name: Checkout
       uses: actions/checkout@master
       with:
