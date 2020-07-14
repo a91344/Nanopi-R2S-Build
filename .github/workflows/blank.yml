@@ -23,7 +23,7 @@ jobs:
         ref: master
     - name: prepare
       run: |
-        sudo apt-get -y install libpcre3 libpcre3-dev openssl libssl-dev
+        sudo apt-get -y install libpcre3 libpcre3-dev openssl libssl-dev shadowsocks-libev
     - name: Installation depends
       run: |
         sudo chmod 777 -R .
