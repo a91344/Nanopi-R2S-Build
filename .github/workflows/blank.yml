@@ -23,12 +23,11 @@ jobs:
         git clone https://github.com/coolsnowwolf/lede.git
     - name: Generate config file
       run: |
-        ls -al
         cd lede
         rm -rf .config*
         mv ../.config_r2s_sd_8G ./.config
         mv ../custom ./package/
-        echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> lede/feeds.conf.default
+        echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
     - name: Download package
