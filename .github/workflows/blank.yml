@@ -1,32 +1,41 @@
 name: Build OpenWrt
-on: push
+on: 
+  schedule:
+    - cron: 0 20 * * *
+
 jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
+     - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
     - name: Installation depends
       run: |
+        sudo chmod 777 -R .
         sudo apt-get update
-        sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint
+        sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget swig
     - name: Clone source code
       run: |
-        git clone https://github.com/openwrt/openwrt
-        cd openwrt
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
+        git clone https://github.com/coolsnowwolf/lede.git
     - name: Generate config file
       run: |
-        cd openwrt
-        make defconfig
+        cd lede
+        rm -rf .config*
+        mv ../.config_r2s_sd_8G ./
+        echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> lede/feeds.conf.default
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
     - name: Download package
       run: |
-        cd openwrt && make download -j8
+        cd lede && make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     - name: Build
       run: |
-        cd openwrt
-        make -j$(nproc)
+        cd lede
+        make -j$(nproc) V=s || make -j4 V=s
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
