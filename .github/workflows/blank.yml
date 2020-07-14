@@ -26,7 +26,7 @@ jobs:
         cd lede
         rm -rf .config*
         mv ../.config_r2s_sd_8G ./
-        mv -a ../custom ./lede/package/
+        mv ../custom ./lede/package/
         echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> lede/feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
