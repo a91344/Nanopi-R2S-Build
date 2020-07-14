@@ -1,1 +1,11 @@
+name: temp
+on: push
 
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: temp
+        run: |
+         cd /lib
+         ls *pcre*
