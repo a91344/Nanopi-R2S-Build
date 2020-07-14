@@ -23,8 +23,8 @@ jobs:
         git clone https://github.com/coolsnowwolf/lede.git
     - name: Generate config file
       run: |
-        cd lede
         ls -al
+        cd lede
         rm -rf .config*
         mv ../.config_r2s_sd_8G ./.config
         mv ../custom ./lede/package/
