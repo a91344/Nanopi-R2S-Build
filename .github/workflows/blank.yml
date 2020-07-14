@@ -1,10 +1,9 @@
 name: Build OpenWrt
+
 on: 
-  schedule:
-    - cron: 0 20 * * *
-  push:
-    branches: 
-      - master
+  watch:
+    types: started
+        - master
 jobs:
   build:
     runs-on: ubuntu-18.04
