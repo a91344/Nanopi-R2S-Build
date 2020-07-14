@@ -5,6 +5,10 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
       - name: temp
         run: |
           ls -a
