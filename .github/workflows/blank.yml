@@ -2,9 +2,6 @@ name: Build OpenWrt
 on: 
   schedule:
     - cron: 0 20 * * *
-  push:
-    branches: 
-      - master
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -25,7 +22,7 @@ jobs:
       run: |
         cd lede
         rm -rf .config*
-        mv ../.config_r2s_sd_8G ./
+        mv ../.config_r2s_sd_8G ./.config
         mv ../custom ./lede/package/
         echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> lede/feeds.conf.default
         ./scripts/feeds update -a
