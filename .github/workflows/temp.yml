@@ -8,4 +8,4 @@ jobs:
       - name: temp
         run: |
          cd /lib
-         ls *pcre*
+         sudo ls *pcre*
