@@ -8,4 +8,4 @@ jobs:
       - name: temp
         run: |
          cd /lib
-         sudo ls *pcre*
+         sudo find / -name libpcre.so.1
