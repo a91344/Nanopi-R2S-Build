@@ -7,10 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-     - name: Checkout
-        uses: actions/checkout@master
-        with:
-          ref: master
+    - name: Checkout
+      uses: actions/checkout@master
+      with:
+        ref: master
     - name: Installation depends
       run: |
         sudo chmod 777 -R .
@@ -24,6 +24,7 @@ jobs:
         cd lede
         rm -rf .config*
         mv ../.config_r2s_sd_8G ./
+        mv -a ../custom ./
         echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> lede/feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
