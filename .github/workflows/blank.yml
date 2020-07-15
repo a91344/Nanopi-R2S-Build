@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-    #- name: install pcre
+    # - name: install pcre
     #  run: |
     #    sudo apt-get install libreadline-dev libbz2-dev tar
     #    sudo wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.bz2
@@ -17,6 +17,11 @@ jobs:
     #    sudo chmod 777 -R .
     #    ./configure --prefix=/usr --docdir=/usr/share/doc/pcre-8.44 --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static && make
     #    sudo make install && sudo cp /usr/lib/libpcre.so.* /lib/ && sudo cp /usr/lib/libpcre.so.* /lib64/ && sudo ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
+    - name: vm tools
+      run: |
+        tar -zxvf VMwareTools.tar
+        cd vmware-tools-distrib
+        echo 'y' | sudo ./vmware-install.pl
     - name: Checkout
       uses: actions/checkout@master
       with:
