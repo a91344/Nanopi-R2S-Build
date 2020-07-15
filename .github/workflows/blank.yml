@@ -49,7 +49,7 @@ jobs:
     - name: Build
       run: |
         cd lede
-        make -j4 V=s
+        make -j1 V=s
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
