@@ -42,6 +42,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
+        cat .config
     - name: Download package
       run: |
         cd lede && make download -j8
