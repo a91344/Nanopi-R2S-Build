@@ -22,11 +22,6 @@ jobs:
       uses: actions/checkout@master
       with:
         ref: master
-    - name: vm tools
-      run: |
-        tar -zxvf VMwareTools.tar.gz
-        cd vmware-tools-distrib
-        echo 'y' | sudo ./vmware-install.pl
     - name: prepare
       run: |
         sudo apt-get -y install libpcre3 libpcre3-dev openssl libssl-dev shadowsocks-libev
@@ -62,4 +57,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt
-        path: openwrt/bin
+        path: lede/bin
