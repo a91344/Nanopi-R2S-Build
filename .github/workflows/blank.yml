@@ -16,7 +16,7 @@ jobs:
         cd pcre-8.44
         sudo chmod 777 -R .
         ./configure --prefix=/usr --docdir=/usr/share/doc/pcre-8.44 --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static && make
-        sudo make install && sudo cp /usr/lib/libpcre.so.* /lib/ && cp /usr/lib/libpcre.so.* /lib64/ && sudo ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
+        sudo make install && sudo cp /usr/lib/libpcre.so.* /lib/ && sudo cp /usr/lib/libpcre.so.* /lib64/ && sudo ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
     - name: Checkout
       uses: actions/checkout@master
       with:
