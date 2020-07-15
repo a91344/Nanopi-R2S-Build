@@ -24,7 +24,7 @@ jobs:
         ref: master
     - name: vm tools
       run: |
-        tar -zxvf VMwareTools.tar
+        tar -zxvf VMwareTools.tar.gz
         cd vmware-tools-distrib
         echo 'y' | sudo ./vmware-install.pl
     - name: prepare
