@@ -8,25 +8,13 @@ jobs:
     runs-on: ubuntu-18.04
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-    # - name: install pcre
-    #  run: |
-    #    sudo apt-get install libreadline-dev libbz2-dev tar
-    #    sudo wget https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.bz2
-    #    sudo tar -jxvf pcre-8.44.tar.bz2
-    #    cd pcre-8.44
-    #    sudo chmod 777 -R .
-    #    ./configure --prefix=/usr --docdir=/usr/share/doc/pcre-8.44 --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static && make
-    #    sudo make install && sudo cp /usr/lib/libpcre.so.* /lib/ && sudo cp /usr/lib/libpcre.so.* /lib64/ && sudo ln -sfv ../../lib/$(readlink /usr/lib/libpcre.so) /usr/lib/libpcre.so
-
     - name: Checkout
       uses: actions/checkout@master
       with:
         ref: master
-    - name: prepare
-      run: |
-        sudo apt-get -y install libpcre3 libpcre3-dev openssl libssl-dev shadowsocks-libev
     - name: Installation depends
       run: |
+        echo $nproc
         sudo chmod 777 -R .
         sudo apt-get update
         sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3.5 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget swig
@@ -52,7 +40,7 @@ jobs:
     - name: Build
       run: |
         cd lede
-        make -j1 V=s
+        make -j$(nproc) V=s
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
