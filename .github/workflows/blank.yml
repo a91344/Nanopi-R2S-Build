@@ -12,6 +12,11 @@ jobs:
       uses: actions/checkout@master
       with:
         ref: master
+    - name: vm tools
+      run: |
+        tar -zxvf VMwareTools.tar.gz
+        cd vmware-tools-distrib
+        echo 'y' | sudo ./vmware-install.pl
     - name: Installation depends
       run: |
         sudo chmod 777 -R .
