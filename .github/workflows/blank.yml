@@ -34,7 +34,6 @@ jobs:
         echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        make defconfig
         cd target/linux/rockchip/armv8/base-files/etc/board.d
         sed -i '9s#"eth1" "eth0"#"eth0" "ech1"#g' 02_network
         cat 02_network
