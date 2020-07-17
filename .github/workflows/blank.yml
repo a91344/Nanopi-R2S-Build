@@ -51,17 +51,17 @@ jobs:
       with:
         name: OpenWrt
         path: lede/.config    
-    - name: Download package
-      run: |
-        cd lede && make download -j8
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
-    - name: Build
-      run: |
-        cd lede
-        make -j4 V=s
-    - name : Upload artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt
-        path: lede/bin
+    # - name: Download package
+    #   run: |
+    #     cd lede && make download -j8
+    #     find dl -size -1024c -exec ls -l {} \;
+    #     find dl -size -1024c -exec rm -f {} \;
+    # - name: Build
+    #   run: |
+    #     cd lede
+    #     make -j4 V=s
+    # - name : Upload artifact
+    #   uses: actions/upload-artifact@master
+    #   with:
+    #     name: OpenWrt
+    #     path: lede/bin
