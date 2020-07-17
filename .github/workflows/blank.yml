@@ -45,6 +45,12 @@ jobs:
         cd target/linux/rockchip/armv8/base-files/etc/board.d
         sed -i '9s#"eth1" "eth0"#"eth0" "ech1"#g' 02_network
         cat 02_network
+
+    - name : Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt
+        path: lede/.config    
     - name: Download package
       run: |
         cd lede && make download -j8
