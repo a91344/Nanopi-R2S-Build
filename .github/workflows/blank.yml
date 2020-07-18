@@ -69,8 +69,28 @@ jobs:
       run: |
         cd lede
         make -j4 V=s
-    - name : Upload artifact
+    - name: update lede 8G
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt
-        path: lede/bin
+        name: HwRly_8G
+        path: lede/bin/targets/rockchip/armv8
+    - name: Build 16G
+      run: |
+        sed -e "s#\(ROOTFS_PARTSIZE\)=[0-9]*#\1=14336#g" lede/.config
+        cd lede
+        make -j4 V=s
+    - name: update lede 16G
+      uses: actions/upload-artifact@master
+      with:
+        name: HwRly_16G
+        path: lede/bin/targets/rockchip/armv8
+    - name: Build 32G
+      run: |
+        sed -e "s#\(ROOTFS_PARTSIZE\)=[0-9]*#\1=29696#g" lede/.config
+        cd lede
+        make -j4 V=s
+    - name: update lede 32G
+      uses: actions/upload-artifact@master
+      with:
+        name: HwRly_32G
+        path: lede/bin/targets/rockchip/armv8
