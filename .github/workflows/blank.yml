@@ -56,7 +56,7 @@ jobs:
          -----------------------------------------------------
         EOF
         sed -i 's#^[ \t]\{0,7\}##g' lede/package/base-files/files/etc/banner
-        sed -i '9s#"eth1" "eth0"#"eth0" "ech1"#g' target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+        sed -i '9s#"eth1" "eth0"#"eth0" "ech1"#g' lede/target/linux/rockchip/armv8/base-files/etc/board.d/02_network
         sed -i "16i export PS1='[\[\033[35;1m\]\u\[\033[0m\]@\[\033[34;1m\]\h\[\033\[0m\]:\[\033[32;1m\]\W\[\033[0m\] \[\033[33;1m\]\A\[\033[0m\]]\$ '" lede/package/base-files/files/etc/profile
     - name: Download package
       run: |
