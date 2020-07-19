@@ -14,9 +14,9 @@ jobs:
         ref: master
     - name: vm tools
       run: |
-        tar -zxvf VMwareTools.tar.gz
-        cd vmware-tools-distrib
-        echo 'y' | sudo ./vmware-install.pl
+        # tar -zxvf VMwareTools.tar.gz
+        # cd vmware-tools-distrib
+        # echo 'y' | sudo ./vmware-install.pl
     - name: Installation depends
       run: |
         sudo chmod 777 -R .
@@ -30,8 +30,8 @@ jobs:
         cd lede
         rm -rf .config*
 
-        echo 'src-git lienol https://github.com/Lienol/openwrt-package.git' >> feeds.conf.default
-
+        echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
+        echo 'src-git small https://github.com/kenzok8/small' >> feeds.conf.default
         mv ../custom ./package/
 
         ./scripts/feeds update -a
